@@ -16,7 +16,7 @@ def find_customer():
 
 
     response = requests.get(
-        url=os.getenv('base_uat_url') + f"customer/{os.getenv('customer_id')}",
+        url=os.getenv('base_uat_url') + f"bank-node/customer-accounts/v1/customer/{os.getenv('customer_id')}",
         auth=basic_auth,
         headers=headers,
         timeout=60
@@ -41,7 +41,7 @@ def get_accts():
 
 
     response = requests.get(
-        url=os.getenv('base_uat_url') + f"customer/{os.getenv('customer_id')}/accounts",
+        url=os.getenv('base_uat_url') + f"bank-node/customer-accounts/v1/customer/{os.getenv('customer_id')}/accounts",
         auth=basic_auth,
         headers=headers,
         timeout=60
@@ -75,7 +75,7 @@ def get_acct_details(acct_id):
 
 
     response = requests.get(
-        url=os.getenv('base_uat_url') + f"account/{acct_id}",
+        url=os.getenv('base_uat_url') + f"bank-node/customer-accounts/v1/account/{acct_id}",
         auth=basic_auth,
         headers=headers,
         timeout=60
@@ -97,7 +97,7 @@ def get_transactions(acct_id, tran_type):
 
 
     response = requests.get(
-        url=os.getenv('base_uat_url') + f"account/{acct_id}/trans/{tran_type}",
+        url=os.getenv('base_uat_url') + f"bank-node/customer-accounts/v1/account/{acct_id}/trans/{tran_type}",
         auth=basic_auth,
         headers=headers,
         timeout=60
@@ -122,7 +122,7 @@ def get_transaction_detail(trn_id):
 
 
     response = requests.get(
-        url=os.getenv('base_uat_url') + f"transaction/{trn_id}",
+        url=os.getenv('base_uat_url') + f"bank-node/customer-accounts/v1/transaction/{trn_id}",
         auth=basic_auth,
         headers=headers,
         timeout=60
@@ -130,6 +130,49 @@ def get_transaction_detail(trn_id):
 
     trn = response.json()["transaction"]
     return trn
+
+def get_merchant_codes():
+    load_dotenv()
+    basic_auth = HTTPBasicAuth(os.getenv('api_key'), os.getenv('secret'))
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+
+    response = requests.get(
+        url=os.getenv('base_uat_url') + f"bank-node/reference/v1/codes/all",
+        auth=basic_auth,
+        headers=headers,
+        timeout=60
+    )
+
+    mccs = []
+    codes = response.json()
+    #for code in codes["codes"]:
+    #    mccs.append(code)
+    
+    return codes
+
+def get_purchase_category(mcc):
+    load_dotenv()
+    basic_auth = HTTPBasicAuth(os.getenv('api_key'), os.getenv('secret'))
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+
+    response = requests.get(
+        url=os.getenv('base_uat_url') + f"bank-node/reference/v1/code/{mcc}",
+        auth=basic_auth,
+        headers=headers,
+        timeout=60
+    )
+
+    return response.json()
 
 if __name__ == "__main__":
     name, email, custID, status = find_customer()
@@ -139,7 +182,19 @@ if __name__ == "__main__":
     #print(f'Savings Account for {name}:')
     savingsDetail, savingsCards = get_acct_details(savings.get("accountID"))
     #pprint(savingsDetail)
-    savTransacts = get_transactions(savings["accountID"], "SHORT")
-    pprint(savTransacts[0])
-    newest_sav_trn = get_transaction_detail(savTransacts[0].get("transactionID"))
-    pprint(newest_sav_trn)
+    credTransactions = get_transactions(cred_card["accountID"], "FULL")
+    types = []
+    for tran in credTransactions:
+            if tran["transactionType"] == 'PURCHASE':
+                types.append(tran)
+    #pprint(types)
+    categories = []
+    for tran in types:
+        categories.append(get_purchase_category(tran["subCategory"]))
+    pprint(categories)
+
+    #pprint(cheTransacts)
+    #newest_sav_trn = get_transaction_detail(cheTransacts[0].get("transactionID"))
+    #pprint(newest_sav_trn)
+    #merchant_codes = get_merchant_codes()
+    #pprint(merchant_codes)
