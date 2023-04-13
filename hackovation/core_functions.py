@@ -148,7 +148,7 @@ def get_merchant_codes():
         timeout=60
     )
 
-    mccs = []
+    
     codes = response.json()
     #for code in codes["codes"]:
     #    mccs.append(code)
@@ -174,27 +174,23 @@ def get_purchase_category(mcc):
 
     return response.json()
 
+def show_money_market_savings(monthlyInc, percSaved, openAmt):
+    amt_to_save = monthlyInc * percSaved
+    balance_two_years = openAmt + (amt_to_save * 24)
+    balance_five_years = openAmt + (amt_to_save * 60)
+    balance_ten_years = openAmt + (amt_to_save * 120)
+
+    if balance_two_years >= 25000:
+        balance_two_years = balance_two_years * 0.07
+    
+    if balance_five_years >= 25000:
+        balance_five_years = balance_five_years * 0.175
+    
+    if balance_ten_years >= 25000:
+        balance_ten_years = balance_ten_years * 3.5
+
+    return balance_two_years, balance_five_years, balance_ten_years
+
 if __name__ == "__main__":
     name, email, custID, status = find_customer()
-    #print(f'Status code: {status}')
-    #print(f'Welcome, {name}! Your Customer ID is {custID}')
-    checkings, savings, cred_card = get_accts()
-    #print(f'Savings Account for {name}:')
-    savingsDetail, savingsCards = get_acct_details(savings.get("accountID"))
-    #pprint(savingsDetail)
-    credTransactions = get_transactions(cred_card["accountID"], "FULL")
-    types = []
-    for tran in credTransactions:
-            if tran["transactionType"] == 'PURCHASE':
-                types.append(tran)
-    #pprint(types)
-    categories = []
-    for tran in types:
-        categories.append(get_purchase_category(tran["subCategory"]))
-    pprint(categories)
-
-    #pprint(cheTransacts)
-    #newest_sav_trn = get_transaction_detail(cheTransacts[0].get("transactionID"))
-    #pprint(newest_sav_trn)
-    #merchant_codes = get_merchant_codes()
-    #pprint(merchant_codes)
+    
