@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom"
+
 export default function LoginPage() {
     return (
         <div class="form-body">
@@ -5,7 +7,7 @@ export default function LoginPage() {
             <div class="form-holder">
                 <div class="form-content">
                     <div class="form-items">
-                        <h3>Register Today</h3>
+                        <h3>Bank name</h3>
                         <p>Fill in the data below.</p>
                         <form class="requires-validation" novalidate>
 
@@ -66,8 +68,14 @@ export default function LoginPage() {
                         </div>
                   
 
-                            <div class="form-button mt-3">
-                                <button id="submit" type="submit" class="btn btn-primary">Register</button>
+                            <div class="form-button mt-3" >
+                             <button id="submit" type="submit" class="btn btn-primary" onclick={<Link to="/home_page"></Link>} > Submit</button>
+                             {/* <a href="/home_page.html"> Register</a>   </button>  */}
+                             button that makes the page route to the next page
+                             ##react router webpage 
+                             anchor href or somthinggggggggggggggggggg
+
+                                {/* <button id="submit" type="submit" class="btn btn-primary">Register   </button> */}
                             </div>
                         </form>
                     </div>
