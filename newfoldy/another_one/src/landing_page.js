@@ -24,7 +24,7 @@ export default function ImgMediaCard() {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">HomePage</Button>
+        <Button size="small">New User</Button>
 
         <Button size="small" href="/login_page">Sign In</Button>
       </CardActions>
