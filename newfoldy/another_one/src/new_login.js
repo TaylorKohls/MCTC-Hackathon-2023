@@ -40,7 +40,7 @@ export default function LoginPage() {
                               <input class="form-control" type="password" name="password" placeholder="Password" required>
                               </input>
 
-                               <div class="invalid-feedback">Password field cannot be blank</div>
+                               <div class="invalid-feedback"></div>
                            </div>
 
 
@@ -53,8 +53,8 @@ export default function LoginPage() {
                             <input type="radio" class="btn-check" name="gender" id="female" autocomplete="off" required />
                             <label class="btn btn-sm btn-outline-secondary" for="female">New</label>
 
-                            <input type="radio" class="btn-check" name="gender" id="secret" autocomplete="off" required />
-                            <label class="btn btn-sm btn-outline-secondary" for="secret">Secret</label>
+                            {/* <input type="radio" class="btn-check" name="gender" id="secret" autocomplete="off" required />
+                            <label class="btn btn-sm btn-outline-secondary" for="secret">Secret</label> */}
                             </div>
 
                         <div class="form-check">
