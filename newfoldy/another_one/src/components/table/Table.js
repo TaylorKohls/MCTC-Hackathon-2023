@@ -12,11 +12,13 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
+  createData('Income', 2500, 0.0, 0.00, 2500.00),
   createData('Savings Account', 1590, 6.0, 138.00, 1725.81),
-  createData('Rent', 1075, 0.0, 0.0, 1075),
   createData('Checking Account', 262, 2.0, 5.24, 267.24),
   createData('Credit Debt', 305, 3.7, 11.28, 316.3),
   createData('Student Loans', 3956, 3, 118.68, 4074.68),
+  createData('Rent', 1075, 0.0, 0.0, 1075),
+
 ];
 
 export default function DenseTable() {
@@ -25,7 +27,7 @@ export default function DenseTable() {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell> (Projected)</TableCell>
+            <TableCell> (Monthly Projected)</TableCell>
             <TableCell align="right">Current </TableCell>
             <TableCell align="right">Interest &nbsp;(%)</TableCell>
             <TableCell align="right">Total&nbsp;(g)</TableCell>
