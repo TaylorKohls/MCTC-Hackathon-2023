@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom"
+import Button from '@mui/material/Button';
 
 export default function LoginPage() {
     return (
@@ -64,11 +65,7 @@ export default function LoginPage() {
                   
 
                             <div class="form-button mt-3" >
-                             <button id="submit" type="submit" class="btn btn-primary" onclick={<Link to="/home_page"></Link>} > Submit</button>
-                             {/* <a href="/home_page.html"> Register</a>   </button>  */}
-                             button that makes the page route to the next page
-                             ##react router webpage 
-                             anchor href or somthinggggggggggggggggggg
+                             <Button size="small" href="/piechart">Sign In</Button>
 
                                 {/* <button id="submit" type="submit" class="btn btn-primary">Register   </button> */}
                             </div>
