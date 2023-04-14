@@ -1,8 +1,7 @@
-export default function HomePage() {
-    return(
-        <div>homepage
-           <p>pastey things </p> pastey things
-        </div>
-    )
+import {Link} from "react-router-dom"
 
-}
+export default function LoginPage() {
+    return (
+
+        <div></div>
+    )}
